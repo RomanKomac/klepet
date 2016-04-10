@@ -58,8 +58,15 @@ a {
   font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+<<<<<<< HEAD
 .shared-picture {
   margin-left: 20px;
   width: 200px;
   height: auto;
+=======
+.shared-video{
+  width: 200px;
+  height: 150px;
+  margin-left: 20px;
+>>>>>>> youtube
 }

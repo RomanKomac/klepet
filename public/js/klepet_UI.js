@@ -1,11 +1,15 @@
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
   var jeSlika = sporocilo.indexOf('<img') > -1;
-  if (jeSmesko || jeSlika) {
-    var rgxend = /(png|jpg|gif)" \/?&gt;/gi;
-    var rgxbegin = /&lt;img/gi;
-    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(rgxbegin, '<br><img').replace(rgxend, '$1" />');
+  var jeYoutube = sporocilo.indexOf('</iframe>') > -1;
+  if (jeSmesko || jeSlika || jeYoutube) {
+    var rgxendslika = /(png|jpg|gif)" \/?&gt;/gi;
+    var rgxbeginslika = /&lt;img/gi;
+    var rgxbeginyt = /&lt;iframe/gi;
+    var rgxendyt  = /&gt;&lt;\/iframe&gt\;/gi;
+    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(rgxbeginslika, '<br><img').replace(rgxendslika, '$1" />').replace(rgxbeginyt,'<br><iframe').replace(rgxendyt,'></iframe>');
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
+
   } else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
   }
@@ -27,7 +31,11 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     }
   } else {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
+<<<<<<< HEAD
     sporocilo = procesirajSlikovneElemente(sporocilo);
+=======
+    sporocilo = procesirajYouTube(sporocilo);
+>>>>>>> youtube
     klepetApp.posljiSporocilo(trenutniKanal, sporocilo);
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
@@ -44,6 +52,7 @@ $.get('/swearWords.txt', function(podatki) {
   vulgarneBesede = podatki.split('\r\n');
 });
 
+<<<<<<< HEAD
 
 function procesirajSlikovneElemente(vhod) {
   var rgx = /https?:\/\/.*?\.(jpg|png|gif)/gi;
@@ -54,6 +63,17 @@ function procesirajSlikovneElemente(vhod) {
     }
   }
   return vhod;
+=======
+function procesirajYouTube(vhod){
+  var rgx = /https?:\/\/www\.youtube\.com\/watch\?v=.*?(?:\s|$)/gi;
+  var matches;
+   if(matches = vhod.match(rgx)){
+     for(var i = 0; i < matches.length; i++){
+       vhod += '<iframe class="shared-video" src="'+ matches[i].replace("/watch?v=","/embed/") +'" allowfullscreen></iframe>';
+     }
+   }
+   return vhod;
+>>>>>>> youtube
 }
 
 function filtirirajVulgarneBesede(vhod) {
