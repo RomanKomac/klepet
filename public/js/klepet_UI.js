@@ -31,11 +31,8 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     }
   } else {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
-<<<<<<< HEAD
     sporocilo = procesirajSlikovneElemente(sporocilo);
-=======
     sporocilo = procesirajYouTube(sporocilo);
->>>>>>> youtube
     klepetApp.posljiSporocilo(trenutniKanal, sporocilo);
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
@@ -52,7 +49,6 @@ $.get('/swearWords.txt', function(podatki) {
   vulgarneBesede = podatki.split('\r\n');
 });
 
-<<<<<<< HEAD
 
 function procesirajSlikovneElemente(vhod) {
   var rgx = /https?:\/\/.*?\.(jpg|png|gif)/gi;
@@ -63,7 +59,8 @@ function procesirajSlikovneElemente(vhod) {
     }
   }
   return vhod;
-=======
+}
+
 function procesirajYouTube(vhod){
   var rgx = /https?:\/\/www\.youtube\.com\/watch\?v=.*?(?:\s|$)/gi;
   var matches;
@@ -73,7 +70,6 @@ function procesirajYouTube(vhod){
      }
    }
    return vhod;
->>>>>>> youtube
 }
 
 function filtirirajVulgarneBesede(vhod) {
