@@ -67,6 +67,16 @@ $(document).ready(function() {
     $('#sporocila').append(divElementHtmlTekst(sporocilo));
   });
 
+  socket.on('dregljaj', function (dregljaj) {
+    if(dregljaj.dregljaj){
+      $('#vsebina').jrumble();
+      $('#vsebina').trigger('startRumble');
+      setTimeout(function () {
+          $('#vsebina').trigger('stopRumble');
+      }, 1500);
+    }
+  });
+
   socket.on('pridruzitevOdgovor', function(rezultat) {
     trenutniKanal = rezultat.kanal;
     $('#kanal').text(trenutniVzdevek + " @ " + trenutniKanal);
